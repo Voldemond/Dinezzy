@@ -41,7 +41,7 @@ const featureData = [
   {
     title: "Super Dine In",
     imgUrl: featureImg02,
-    desc: ".",
+    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
   },
   {
     title: "Easy Table booking",
