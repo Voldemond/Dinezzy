@@ -3,22 +3,32 @@ import { useSelector } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
-
+// import  PayPal  from "../components/paypal/PayPal";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../styles/checkout.css";
+import { useEffect } from "react";
+
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
   const [enterEmail, setEnterEmail] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
-  const [enterCountry, setEnterCountry] = useState("");
-  const [enterCity, setEnterCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  // const [checkout, setCheckOut] = useState(false);
+  // const [enterCountry, setEnterCountry] = useState("");
+  // const [enterCity, setEnterCity] = useState("");
+  // const [postalCode, setPostalCode] = useState("");
 
   const shippingInfo = [];
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const shippingCost = 30;
+  // const shippingCost = 30;
 
-  const totalAmount = cartTotalAmount + Number(shippingCost);
+  const totalAmount = cartTotalAmount;
+  useEffect(()=>{
+    console.log(totalAmount)
+  })
+  
+  const [paypal,setpaypal]=useState(false)
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -93,11 +103,31 @@ const Checkout = () => {
                     onChange={(e) => setPostalCode(e.target.value)}
                   />
                 </div> */}
-                <button type="submit" className="addTOCart__btn">
+                <button type="submit" className="addTOCart__btn" onClick={()=>setpaypal(!paypal)}>
                   Payment
                 </button>
+              {paypal &&  <PayPalScriptProvider options={{"client-id": "AcbWFqseytCH0kp6iqkDfKKN6uanARCvZ-qOH3ewLSA.TFT4drJxiSpZ"}}>
+                  <PayPalButtons 
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: totalAmount,
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    const details = await actions.order.capture();
+                    const name = details.payer.name.given_name;
+                    alert("Transaction completed by " + name);
+                  }}/>
+                </PayPalScriptProvider> }
               </form>
             </Col>
+            
 
             <Col lg="4" md="6">
               <div className="checkout__bill">
@@ -118,7 +148,6 @@ const Checkout = () => {
         </Container>
       </section>
     </Helmet>
-  );
-};
+  )};
 
 export default Checkout;
