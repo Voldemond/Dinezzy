@@ -21,39 +21,39 @@ const TestimonialSlider = () => {
   return (
     <Slider {...settings}>
       <div>
-        <p className="review__text">
+        {/* <p className="review__text">
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
           atque, quam minus totam maiores laborum! Impedit consectetur illum
           aliquid odit. Odit dolore ipsum quod debitis nostrum necessitatibus
           quis dolorem quas!"
-        </p>
+        </p> */}
         <div className=" slider__content d-flex align-items-center gap-3 ">
-          <img src={ava01} alt="avatar" className=" rounded" />
-          <h6>Jhon Doe</h6>
+          {/* <img src={ava01} alt="avatar" className=" rounded" /> */}
+          {/* <h6>Jhon Doe</h6> */}
         </div>
       </div>
       <div>
-        <p className="review__text">
+        {/* <p className="review__text">
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
           atque, quam minus totam maiores laborum! Impedit consectetur illum
           aliquid odit. Odit dolore ipsum quod debitis nostrum necessitatibus
           quis dolorem quas!"
-        </p>
+        </p> */}
         <div className="slider__content d-flex align-items-center gap-3 ">
-          <img src={ava02} alt="avatar" className=" rounded" />
-          <h6>Mitchell Marsh</h6>
+          {/* <img src={ava02} alt="avatar" className=" rounded" /> */}
+          {/* <h6>Mitchell Marsh</h6> */}
         </div>
       </div>
       <div>
-        <p className="review__text">
+        {/* <p className="review__text">
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
           atque, quam minus totam maiores laborum! Impedit consectetur illum
           aliquid odit. Odit dolore ipsum quod debitis nostrum necessitatibus
           quis dolorem quas!"
-        </p>
+        </p> */}
         <div className="slider__content d-flex align-items-center gap-3 ">
-          <img src={ava03} alt="avatar" className=" rounded" />
-          <h6>Steven Crock</h6>
+          {/* <img src={ava03} alt="avatar" className=" rounded" /> */}
+          {/* <h6>Steven Crock</h6> */}
         </div>
       </div>
     </Slider>
