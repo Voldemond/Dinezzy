@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 // import  PayPal  from "../components/paypal/PayPal";
@@ -9,7 +9,8 @@ import "../styles/checkout.css";
 import { useEffect } from "react";
 
 
-const Checkout = () => {
+
+const Checkout = (args) => {
   const [enterName, setEnterName] = useState("");
   const [enterEmail, setEnterEmail] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
@@ -23,11 +24,11 @@ const Checkout = () => {
   // const shippingCost = 30;
 
   const totalAmount = cartTotalAmount;
-  useEffect(()=>{
+  useEffect(() => {
     console.log(totalAmount)
   })
-  
-  const [paypal,setpaypal]=useState(false)
+
+  const [paypal, setpaypal] = useState(false)
 
 
   const submitHandler = (e) => {
@@ -44,6 +45,10 @@ const Checkout = () => {
     shippingInfo.push(userShippingAddress);
     console.log(shippingInfo);
   };
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   return (
     <Helmet title="Checkout">
@@ -103,31 +108,31 @@ const Checkout = () => {
                     onChange={(e) => setPostalCode(e.target.value)}
                   />
                 </div> */}
-                <button type="submit" className="addTOCart__btn" onClick={()=>setpaypal(!paypal)}>
+                {/* <button type="submit" className="addTOCart__btn" onClick={() => setpaypal(!paypal)}>
                   Payment
-                </button>
-              {paypal &&  <PayPalScriptProvider options={{"client-id": "AcbWFqseytCH0kp6iqkDfKKN6uanARCvZ-qOH3ewLSA.TFT4drJxiSpZ"}}>
-                  <PayPalButtons 
-                  createOrder={(data, actions) => {
-                    return actions.order.create({
-                      purchase_units: [
-                        {
-                          amount: {
-                            value: totalAmount,
+                </button> */}
+                {paypal && <PayPalScriptProvider options={{ "client-id": "AcbWFqseytCH0kp6iqkDfKKN6uanARCvZ-qOH3ewLSA.TFT4drJxiSpZ" }}>
+                  <PayPalButtons
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: totalAmount,
+                            },
                           },
-                        },
-                      ],
-                    });
-                  }}
-                  onApprove={async (data, actions) => {
-                    const details = await actions.order.capture();
-                    const name = details.payer.name.given_name;
-                    alert("Transaction completed by " + name);
-                  }}/>
-                </PayPalScriptProvider> }
+                        ],
+                      });
+                    }}
+                    onApprove={async (data, actions) => {
+                      const details = await actions.order.capture();
+                      const name = details.payer.name.given_name;
+                      alert("Transaction completed by " + name);
+                    }} />
+                </PayPalScriptProvider>}
               </form>
             </Col>
-            
+
 
             <Col lg="4" md="6">
               <div className="checkout__bill">
@@ -144,10 +149,41 @@ const Checkout = () => {
                 </div>
               </div>
             </Col>
+
+            <Button color="danger" onClick={toggle}>
+              Place Order
+            </Button>
+            
+            <Modal isOpen={modal} toggle={toggle} {...args}>
+              <ModalHeader toggle={toggle}>Thankyou For using Dinezzy</ModalHeader>
+              <ModalBody>
+              <p id="special-text">Your Order has Been Placed Succesfully.</p>
+                <br />
+                Name :{enterName}
+                <br />
+                Email :{enterEmail}
+                <br />
+                Contact Number :{enterNumber}
+                <br />
+                Total Amount To be Paid :${cartTotalAmount}
+                <br />
+                {/* {totalAmount} */}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={toggle}>
+                  OK
+                </Button>{' '}
+                <Button color="secondary" onClick={toggle}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </Modal>
+
           </Row>
         </Container>
       </section>
     </Helmet>
-  )};
+  )
+};
 
 export default Checkout;
