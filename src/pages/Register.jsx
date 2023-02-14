@@ -5,18 +5,15 @@ import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "../styles/register.css";
+
 const Register = (args) => {
   const signupNameRef = useRef();
   const signupPasswordRef = useRef();
   const signupEmailRef = useRef();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
-
   const [modal, setModal] = useState(false);
-
   const toggle = () => setModal(!modal);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -28,6 +25,12 @@ const Register = (args) => {
     setEmail(email);
     setModal(true);
   };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    handleOpenModal();
+  };
+
   return (
     <Helmet title="Signup">
       <CommonSection title="Signup" />
@@ -60,29 +63,23 @@ const Register = (args) => {
                     ref={signupPasswordRef}
                   />
                 </div>
-                {/* <button type="submit" className="addTOCart__btn">
-                  Sign Up
-                </button> */}
                 <Button color="danger" onClick={toggle}>
-        Sign Up
-      </Button>
-      <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-        <ModalBody>
-        <p id="special-text">Your Account has Been Created Succesfully.</p>
-        Name: {signupNameRef.current.value}
-        <br />
-        Email: {signupEmailRef.current.value}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Okay
-          </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
+                  Sign Up
+                </Button>
+                <Modal isOpen={modal} toggle={toggle} {...args}>
+                  <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                  <ModalBody>
+                    <p id="special-text">Your Account has Been Created Successfully.</p>
+                    Name: {signupNameRef.current.value}
+                    <br />
+                    Email: {signupEmailRef.current.value}
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={toggle}>
+                      Okay
+                    </Button>
+                  </ModalFooter>
+                </Modal>
               </form>
               <Link to="/login">Already have an account? Login</Link>
             </Col>
