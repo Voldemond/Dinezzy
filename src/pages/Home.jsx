@@ -109,7 +109,7 @@ const Home = () => {
 
                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
                   <button className="order__btn d-flex align-items-center justify-content-between">
-                    Order now <i class="ri-arrow-right-s-line"></i>
+                    Order now : <i class="ri-arrow-right-s-line"></i>
                   </button>
 
                   <button className="all__foods-btn">
